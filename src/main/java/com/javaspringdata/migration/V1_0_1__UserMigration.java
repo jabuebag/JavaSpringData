@@ -1,11 +1,11 @@
-package com.jabuedata.migration;
+package com.javaspringdata.migration;
 
 import org.flywaydb.core.api.migration.spring.SpringJdbcMigration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.Date;
 
-public class V1_0_1__UserGroupAuthorityMigration implements SpringJdbcMigration {
+public class V1_0_1__UserMigration implements SpringJdbcMigration {
 
     JdbcTemplate jdbcTemplate;
 
@@ -13,12 +13,12 @@ public class V1_0_1__UserGroupAuthorityMigration implements SpringJdbcMigration 
     public void migrate(JdbcTemplate jdbcTemplate) throws Exception {
         this.jdbcTemplate = jdbcTemplate;
         createTables();
-        addForeignKeys();
-        insertGroups();
-        insertAuthorities();
-        insertGroupAuthorities();
-        insertRootUser();
-        insertHostUser();
+//        addForeignKeys();
+//        insertGroups();
+//        insertAuthorities();
+//        insertGroupAuthorities();
+//        insertRootUser();
+//        insertHostUser();
         insertGuestUser();
     }
 
@@ -27,10 +27,10 @@ public class V1_0_1__UserGroupAuthorityMigration implements SpringJdbcMigration 
                 "CREATE TABLE IF NOT EXISTS users (" +
                         "  id                   BIGINT AUTO_INCREMENT PRIMARY KEY," +
                         "  username             VARCHAR(64) NOT NULL UNIQUE," +
-                        "  creation_method      VARCHAR(32) NOT NULL, " +
+//                        "  creation_method      VARCHAR(32) NOT NULL, " +
                         "  email                VARCHAR(128)," +
                         "  password             VARCHAR(128)," +
-                        "  auto_password        BOOL," +
+//                        "  auto_password        BOOL," +
                         "  first_name           VARCHAR(32)," +
                         "  last_name            VARCHAR(32)," +
                         "  gender               VARCHAR(32)," +
@@ -39,52 +39,52 @@ public class V1_0_1__UserGroupAuthorityMigration implements SpringJdbcMigration 
                         "  introduction         LONGTEXT," +
                         "  date_created         DATETIME NOT NULL," +
                         "  date_last_login      DATETIME," +
-                        "  last_updated         DATETIME," +
-                        "  enabled              BOOL," +
-                        "  account_expired      BOOL," +
-                        "  account_locked       BOOL," +
-                        "  password_expired     BOOL," +
-                        "  facebook_id          VARCHAR(128)," +
-                        "  wechat_id            VARCHAR(128)," +
-                        "  email_verified       BOOL," +
-                        "  telephone_verified   BOOL," +
-                        "  id_verified          BOOL," +
-                        "  pwd_reset_date       DATETIME," +
-                        "  pwd_reset_hash       DATETIME UNIQUE," +
-                        "  version              BIGINT NOT NULL, " +
-                        "  group_id             BIGINT NOT NULL" +
+                        "  last_updated         DATETIME" +
+//                        "  enabled              BOOL," +
+//                        "  account_expired      BOOL," +
+//                        "  account_locked       BOOL," +
+//                        "  password_expired     BOOL," +
+//                        "  facebook_id          VARCHAR(128)," +
+//                        "  wechat_id            VARCHAR(128)," +
+//                        "  email_verified       BOOL," +
+//                        "  telephone_verified   BOOL," +
+//                        "  id_verified          BOOL," +
+//                        "  pwd_reset_date       DATETIME," +
+//                        "  pwd_reset_hash       DATETIME UNIQUE," +
+//                        "  version              BIGINT NOT NULL, " +
+//                        "  group_id             BIGINT NOT NULL" +
                         ") ENGINE = InnoDB"
         );
 
-        jdbcTemplate.execute(
-                "CREATE TABLE IF NOT EXISTS groups (" +
-                        "  id   BIGINT AUTO_INCREMENT PRIMARY KEY," +
-                        "  name VARCHAR(64) NOT NULL UNIQUE" +
-                        ") ENGINE = InnoDB"
-        );
-
-        jdbcTemplate.execute(
-                "CREATE TABLE IF NOT EXISTS authorities (" +
-                        "  id   BIGINT AUTO_INCREMENT PRIMARY KEY," +
-                        "  name VARCHAR(64) NOT NULL UNIQUE" +
-                        ") ENGINE = InnoDB"
-        );
-
-        jdbcTemplate.execute(
-                "CREATE TABLE IF NOT EXISTS groups_authorities (" +
-                        "  group_id      BIGINT NOT NULL," +
-                        "  authority_id  BIGINT NOT NULL," +
-                        "  PRIMARY KEY (group_id, authority_id)" +
-                        ") ENGINE = InnoDB"
-        );
-
-        jdbcTemplate.execute(
-                "CREATE TABLE IF NOT EXISTS users_authorities (" +
-                        "  user_id        BIGINT NOT NULL," +
-                        "  authority_id   BIGINT NOT NULL," +
-                        "  PRIMARY KEY (user_id, authority_id)" +
-                        ") ENGINE = InnoDB"
-        );
+//        jdbcTemplate.execute(
+//                "CREATE TABLE IF NOT EXISTS groups (" +
+//                        "  id   BIGINT AUTO_INCREMENT PRIMARY KEY," +
+//                        "  name VARCHAR(64) NOT NULL UNIQUE" +
+//                        ") ENGINE = InnoDB"
+//        );
+//
+//        jdbcTemplate.execute(
+//                "CREATE TABLE IF NOT EXISTS authorities (" +
+//                        "  id   BIGINT AUTO_INCREMENT PRIMARY KEY," +
+//                        "  name VARCHAR(64) NOT NULL UNIQUE" +
+//                        ") ENGINE = InnoDB"
+//        );
+//
+//        jdbcTemplate.execute(
+//                "CREATE TABLE IF NOT EXISTS groups_authorities (" +
+//                        "  group_id      BIGINT NOT NULL," +
+//                        "  authority_id  BIGINT NOT NULL," +
+//                        "  PRIMARY KEY (group_id, authority_id)" +
+//                        ") ENGINE = InnoDB"
+//        );
+//
+//        jdbcTemplate.execute(
+//                "CREATE TABLE IF NOT EXISTS users_authorities (" +
+//                        "  user_id        BIGINT NOT NULL," +
+//                        "  authority_id   BIGINT NOT NULL," +
+//                        "  PRIMARY KEY (user_id, authority_id)" +
+//                        ") ENGINE = InnoDB"
+//        );
     }
 
     public void addForeignKeys() {
@@ -284,8 +284,8 @@ public class V1_0_1__UserGroupAuthorityMigration implements SpringJdbcMigration 
     }
 
     public void insertGuestUser() {
-        Long guestGroupId = jdbcTemplate.queryForObject(
-                "SELECT id FROM groups WHERE name = 'GROUP_GUEST'", Long.class);
+//        Long guestGroupId = jdbcTemplate.queryForObject(
+//                "SELECT id FROM groups WHERE name = 'GROUP_GUEST'", Long.class);
 
         Date now = new Date(1443145775776L);
 
@@ -293,60 +293,60 @@ public class V1_0_1__UserGroupAuthorityMigration implements SpringJdbcMigration 
         jdbcTemplate.update(
                 "INSERT INTO users(" +
                         "username, " +
-                        "creation_method, " +
+//                        "creation_method, " +
                         "email, " +
                         "password, " +
-                        "auto_password, " +
+//                        "auto_password, " +
                         "first_name, " +
                         "last_name, " +
                         "gender, " +
                         "telephone, " +
                         "occupation, " +
                         "introduction, " +
-                        "group_id, " +
-                        "version, " +
-                        "email_verified, " +
-                        "telephone_verified, " +
-                        "id_verified, " +
-                        "enabled, " +
-                        "account_expired, " +
-                        "account_locked, " +
-                        "password_expired, " +
+//                        "group_id, " +
+//                        "version, " +
+//                        "email_verified, " +
+//                        "telephone_verified, " +
+//                        "id_verified, " +
+//                        "enabled, " +
+//                        "account_expired, " +
+//                        "account_locked, " +
+//                        "password_expired, " +
                         "date_last_login, " +
                         "date_created) " +
-                        "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                        "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 new Object[]{
                         "guest",
-                        "NATIVE",
+//                        "NATIVE",
                         "info@ybagapp.com",
                         "$2a$08$xD05fRathu10WWigRXHBbeUmMc7wWtyI8FhcReUUNeBXVx/XEMXNO", //password: guest123
-                        false,
+//                        false,
                         "guest",
                         "Guest",
                         "FEMALE",
                         "3389873365",
                         "Student",
                         "Yidai No. 1",
-                        guestGroupId,
-                        0L,
-                        true,
-                        true,
-                        true,
-                        true,
-                        false,
-                        false,
-                        false,
+//                        guestGroupId,
+//                        0L,
+//                        true,
+//                        true,
+//                        true,
+//                        true,
+//                        false,
+//                        false,
+//                        false,
                         now,
                         now}
         );
 
-        jdbcTemplate.update(
-                "INSERT INTO users_authorities (user_id, authority_id)" +
-                        "  SELECT" +
-                        "    users.id," +
-                        "    authorities.id" +
-                        "  FROM users, authorities" +
-                        "  WHERE users.username = 'guest' AND authorities.name = 'ROLE_GUEST'"
-        );
+//        jdbcTemplate.update(
+//                "INSERT INTO users_authorities (user_id, authority_id)" +
+//                        "  SELECT" +
+//                        "    users.id," +
+//                        "    authorities.id" +
+//                        "  FROM users, authorities" +
+//                        "  WHERE users.username = 'guest' AND authorities.name = 'ROLE_GUEST'"
+//        );
     }
 }

@@ -1,4 +1,4 @@
-package com.jabuedata.migration;
+package com.javaspringdata.migration;
 
 import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class MigrationApplication {
         flyway.setBaselineOnMigrate(true);
         flyway.setBaselineVersion("1_0_0");
         flyway.setLocations(
-                "classpath:com.jabuedata.migration");
+                "classpath:com.javaspringdata.migration");
         flyway.setDataSource(dataSource);
         return flyway;
     }

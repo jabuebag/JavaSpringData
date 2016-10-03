@@ -28,18 +28,18 @@ public class V1_0_1__UserMigration implements SpringJdbcMigration {
                         "  id                   BIGINT AUTO_INCREMENT PRIMARY KEY," +
                         "  username             VARCHAR(64) NOT NULL UNIQUE," +
 //                        "  creation_method      VARCHAR(32) NOT NULL, " +
-                        "  email                VARCHAR(128)," +
-                        "  password             VARCHAR(128)," +
+//                        "  email                VARCHAR(128)," +
+                        "  password             VARCHAR(128)" +
 //                        "  auto_password        BOOL," +
-                        "  first_name           VARCHAR(32)," +
-                        "  last_name            VARCHAR(32)," +
-                        "  gender               VARCHAR(32)," +
-                        "  telephone            VARCHAR(64)," +
-                        "  occupation           VARCHAR(64)," +
-                        "  introduction         LONGTEXT," +
-                        "  date_created         DATETIME NOT NULL," +
-                        "  date_last_login      DATETIME," +
-                        "  last_updated         DATETIME" +
+//                        "  first_name           VARCHAR(32)," +
+//                        "  last_name            VARCHAR(32)," +
+//                        "  gender               VARCHAR(32)," +
+//                        "  telephone            VARCHAR(64)," +
+//                        "  occupation           VARCHAR(64)," +
+//                        "  introduction         LONGTEXT," +
+//                        "  date_created         DATETIME NOT NULL," +
+//                        "  date_last_login      DATETIME," +
+//                        "  last_updated         DATETIME" +
 //                        "  enabled              BOOL," +
 //                        "  account_expired      BOOL," +
 //                        "  account_locked       BOOL," +
@@ -294,15 +294,15 @@ public class V1_0_1__UserMigration implements SpringJdbcMigration {
                 "INSERT INTO users(" +
                         "username, " +
 //                        "creation_method, " +
-                        "email, " +
-                        "password, " +
+//                        "email, " +
+                        "password)" +
 //                        "auto_password, " +
-                        "first_name, " +
-                        "last_name, " +
-                        "gender, " +
-                        "telephone, " +
-                        "occupation, " +
-                        "introduction, " +
+//                        "first_name, " +
+//                        "last_name, " +
+//                        "gender, " +
+//                        "telephone, " +
+//                        "occupation, " +
+//                        "introduction, " +
 //                        "group_id, " +
 //                        "version, " +
 //                        "email_verified, " +
@@ -312,21 +312,21 @@ public class V1_0_1__UserMigration implements SpringJdbcMigration {
 //                        "account_expired, " +
 //                        "account_locked, " +
 //                        "password_expired, " +
-                        "date_last_login, " +
-                        "date_created) " +
-                        "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+//                        "date_last_login, " +
+//                        "date_created) " +
+                        "values(?, ?)",
                 new Object[]{
                         "guest",
 //                        "NATIVE",
-                        "info@ybagapp.com",
-                        "$2a$08$xD05fRathu10WWigRXHBbeUmMc7wWtyI8FhcReUUNeBXVx/XEMXNO", //password: guest123
+//                        "info@ybagapp.com",
+                        "admin" //password: guest123
 //                        false,
-                        "guest",
-                        "Guest",
-                        "FEMALE",
-                        "3389873365",
-                        "Student",
-                        "Yidai No. 1",
+//                        "guest",
+//                        "Guest",
+//                        "FEMALE",
+//                        "3389873365",
+//                        "Student",
+//                        "Yidai No. 1",
 //                        guestGroupId,
 //                        0L,
 //                        true,
@@ -336,8 +336,7 @@ public class V1_0_1__UserMigration implements SpringJdbcMigration {
 //                        false,
 //                        false,
 //                        false,
-                        now,
-                        now}
+                        }
         );
 
 //        jdbcTemplate.update(

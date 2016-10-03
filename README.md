@@ -1,0 +1,2 @@
+# JavaSpringData
+mvn install
